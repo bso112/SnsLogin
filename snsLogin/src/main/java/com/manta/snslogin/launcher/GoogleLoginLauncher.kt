@@ -29,7 +29,7 @@ class GoogleLoginLauncher(
 
 
         fun build(activity: AppCompatActivity): GoogleLoginLauncher {
-            activity.registerForActivityResult(GoogleSignInContract(activity)) { account ->
+            activity.registerForActivityResult(GoogleSignInContract()) { account ->
                 if (account == null) {
                     onFailureCallback("Failed to login with google")
                 } else {

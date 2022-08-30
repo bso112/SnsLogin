@@ -10,14 +10,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 
-class GoogleSignInContract(private val activity : Activity) : ActivityResultContract<String, GoogleSignInAccount?>() {
+class GoogleSignInContract : ActivityResultContract<String, GoogleSignInAccount?>() {
     override fun createIntent(context: Context, input: String): Intent {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(input)
             .requestEmail()
             .build()
             .let {
-                GoogleSignIn.getClient(activity, it) //TODO 안됬던거 같은데..
+                GoogleSignIn.getClient(context, it)
             }.signInIntent
     }
 
