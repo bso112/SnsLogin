@@ -1,6 +1,5 @@
-package com.manta.snslogin.contract
+package com.manta.snslogin.login.google
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract

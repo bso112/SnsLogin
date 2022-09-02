@@ -34,6 +34,9 @@ dependencies {
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
+    //kakao login
+    implementation "com.kakao.sdk:v2-user:2.8.1"
+
     //firebase
     implementation platform("com.google.firebase:firebase-bom:30.2.0")
     implementation 'com.google.firebase:firebase-auth-ktx'

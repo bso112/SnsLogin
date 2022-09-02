@@ -1,9 +1,8 @@
-package com.manta.snslogin.launcher
+package com.manta.snslogin.login.google
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import com.manta.snslogin.util.FirebaseAuthUtil
-import com.manta.snslogin.contract.GoogleSignInContract
 
 
 class GoogleLoginLauncher(
