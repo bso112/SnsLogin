@@ -23,14 +23,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("my", SnsLogin.getKeyHash(this))
         //googleLoginLauncher.launch()
 
-        SnsLogin.kakaoLogin(this, onSuccess = {
+//        SnsLogin.kakaoLogin(this, onSuccess = {
+//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
+//        }, onFailure = {
+//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
+//        })
+
+        SnsLogin.naverLogin(this, onSuccess = {
             Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
         }, onFailure = {
             Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
         })
+
 
     }
 }

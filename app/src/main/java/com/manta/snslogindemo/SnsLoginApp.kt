@@ -10,6 +10,8 @@ class SnsLoginApp : Application() {
         SnsLogin
             .withGoogleLogin(this)
             .withKakaoLogin(this, BuildConfig.KAKAO_APP_KEY)
+            .withNaverLogin(this, clientId = "", clientSecret = "", clientName = "")
+        
 
     }
 }

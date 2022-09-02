@@ -31,6 +31,9 @@ android {
 
 dependencies {
 
+    //naver login
+    implementation 'com.navercorp.nid:oauth:5.1.1'
+
     //lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
