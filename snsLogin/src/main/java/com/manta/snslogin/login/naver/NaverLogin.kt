@@ -44,4 +44,8 @@ object NaverLogin {
 
         NaverIdLoginSDK.authenticate(context, oauthLoginCallback)
     }
+
+    fun logout(){
+        NaverIdLoginSDK.logout()
+    }
 }

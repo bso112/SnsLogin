@@ -1,8 +1,13 @@
 package com.manta.snslogin
 
+import android.app.Activity
 import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.manta.snslogin.login.google.GoogleLoginLauncher
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
@@ -42,7 +47,14 @@ object SnsLogin {
         return GoogleLoginLauncher.Builder(defaultWebClientId)
     }
 
-    fun getKeyHash(context: Context) = Utility.getKeyHash(context)
+    fun googleLogout(activity: Activity){
+        Firebase.auth.signOut()
+        val opt = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val client = GoogleSignIn.getClient(activity, opt)
+        client.signOut()
+        client.revokeAccess()
+    }
+
 
     fun kakaoLogin(
         context: Context,
@@ -52,6 +64,10 @@ object SnsLogin {
         KakaoLogin.login(context, onSuccess, onFailure)
     }
 
+    fun kakaoLogout(onSuccess: () -> Unit, onFailure: (Throwable) -> Unit) {
+        KakaoLogin.logOut(onSuccess, onFailure)
+    }
+
     fun naverLogin(
         context: Context,
         onSuccess: (NaverLoginResult) -> Unit,
@@ -59,6 +75,13 @@ object SnsLogin {
     ) {
         NaverLogin.login(context, onSuccess, onFailure)
     }
+
+
+    fun naverLogout() {
+        NaverLogin.logout()
+    }
+
+    fun getKeyHash(context: Context) = Utility.getKeyHash(context)
 
 
 }

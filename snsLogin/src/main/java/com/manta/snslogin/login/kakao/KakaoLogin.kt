@@ -44,4 +44,15 @@ object KakaoLogin {
         }
     }
 
+
+    fun logOut(onSuccess: () -> Unit, onFailure: (Throwable) -> Unit) {
+        UserApiClient.instance.logout {
+            if (it != null) {
+                onFailure(it)
+            } else {
+                onSuccess()
+            }
+        }
+    }
+
 }
