@@ -30,14 +30,19 @@ class MainActivity : AppCompatActivity() {
 //        }, onFailure = {
 //            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
 //        })
+//
+//        SnsLogin.naverLogin(this, onSuccess = {
+//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
+//        }, onFailure = {
+//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
+//        })
 
-        SnsLogin.naverLogin(this, onSuccess = {
-            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
-        }, onFailure = {
-            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
-        })
-
-
+//
+//        SnsLogin.twitterLogin(this, onSuccess = {
+//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
+//        }, onFailure = {
+//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
+//        })
 
     }
 }

@@ -1,4 +1,4 @@
-package com.manta.snslogin.util
+package com.manta.snslogin.login.google
 
 import android.app.Activity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -7,6 +7,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.manta.snslogin.util.toSafe
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import java.util.concurrent.CountDownLatch
