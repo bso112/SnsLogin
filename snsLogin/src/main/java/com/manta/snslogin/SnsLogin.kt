@@ -22,14 +22,44 @@ import com.manta.snslogin.login.naver.NaverLoginResult
 import com.manta.snslogin.login.twitter.TwitterLogin
 import com.navercorp.nid.NaverIdLoginSDK
 
+
+class NotInitializedError(authProvider: String) : Throwable("$authProvider SDK not been initialized!")
+
 object SnsLogin {
+
+    internal enum class AuthProvider {
+        Google {
+            override fun logout(activity: Activity) {
+                googleLogout(activity)
+            }
+        }, Twitter {
+            override fun logout(activity: Activity) {
+                twitterLogout()
+            }
+        }, Kakao {
+            override fun logout(activity: Activity) {
+                kakaoLogout()
+            }
+        }, Naver {
+            override fun logout(activity: Activity) {
+                naverLogout()
+            }
+        };
+
+        abstract fun logout(activity: Activity)
+    }
+
+    private val authProviders = mutableListOf<AuthProvider>()
 
     fun withFirebaseAuth(context: Context) = apply {
         FirebaseApp.initializeApp(context)
+        authProviders.add(AuthProvider.Google)
+        authProviders.add(AuthProvider.Twitter)
     }
 
     fun withKakaoLogin(context: Context, appKey: String) = apply {
         KakaoSdk.init(context, appKey)
+        authProviders.add(AuthProvider.Kakao)
     }
 
     fun withNaverLogin(
@@ -44,14 +74,27 @@ object SnsLogin {
             clientSecret,
             clientName
         )
+        authProviders.add(AuthProvider.Naver)
     }
 
     fun googleLogin(defaultWebClientId: String): GoogleLoginLauncher.Builder {
+        checkSdkInitialized(AuthProvider.Google)
         return GoogleLoginLauncher.Builder(defaultWebClientId)
     }
 
     fun googleLogout(activity: Activity) {
+        checkSdkInitialized(AuthProvider.Google)
         GoogleAuthUtil.signOut(activity)
+    }
+
+    fun logoutAll(activity: Activity){
+        authProviders.forEach { it.logout(activity) }
+    }
+
+    private fun checkSdkInitialized(authProvider: AuthProvider){
+        if(!authProviders.contains(authProvider)){
+            throw NotInitializedError(authProvider.name)
+        }
     }
 
 
@@ -60,10 +103,12 @@ object SnsLogin {
         onSuccess: (token: KakaoAccessToken) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
+        checkSdkInitialized(AuthProvider.Kakao)
         KakaoLogin.login(context, onSuccess, onFailure)
     }
 
     fun kakaoLogout(onSuccess: () -> Unit = {}, onFailure: (Throwable) -> Unit = {}) {
+        checkSdkInitialized(AuthProvider.Kakao)
         KakaoLogin.logOut(onSuccess, onFailure)
     }
 
@@ -72,25 +117,27 @@ object SnsLogin {
         onSuccess: (NaverLoginResult) -> Unit,
         onFailure: (String) -> Unit
     ) {
+        checkSdkInitialized(AuthProvider.Naver)
         NaverLogin.login(context, onSuccess, onFailure)
     }
 
 
     fun naverLogout() {
+        checkSdkInitialized(AuthProvider.Naver)
         NaverLogin.logout()
     }
-
-    fun getKeyHash(context: Context) = Utility.getKeyHash(context)
 
     fun twitterLogin(
         activity: Activity,
         onSuccess: (firebaseUserData: FirebaseUserData) -> Unit,
         onFailure: (String) -> Unit
     ) {
+        checkSdkInitialized(AuthProvider.Twitter)
         TwitterLogin.login(activity, onSuccess, onFailure)
     }
 
     fun twitterLogout() {
+        checkSdkInitialized(AuthProvider.Twitter)
         TwitterLogin.logOut()
     }
 

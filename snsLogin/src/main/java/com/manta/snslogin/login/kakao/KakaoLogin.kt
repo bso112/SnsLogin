@@ -8,7 +8,7 @@ import com.kakao.sdk.user.UserApiClient
 
 typealias KakaoAccessToken = String
 
-object KakaoLogin {
+internal object KakaoLogin {
 
     fun login(
         context: Context,

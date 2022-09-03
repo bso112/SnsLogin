@@ -9,7 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 
-class GoogleSignInContract : ActivityResultContract<String, GoogleSignInAccount?>() {
+internal class GoogleSignInContract : ActivityResultContract<String, GoogleSignInAccount?>() {
     override fun createIntent(context: Context, input: String): Intent {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(input)

@@ -9,7 +9,7 @@ import com.manta.snslogin.login.google.GoogleAuthUtil
 import com.manta.snslogin.util.toSafe
 
 
-object TwitterLogin {
+internal object TwitterLogin {
 
     fun login(
         activity: Activity,

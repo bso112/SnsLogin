@@ -4,7 +4,7 @@ import android.content.Context
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.OAuthLoginCallback
 
-object NaverLogin {
+internal object NaverLogin {
 
     fun login(
         context: Context,
