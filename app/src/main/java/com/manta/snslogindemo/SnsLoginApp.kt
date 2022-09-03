@@ -7,11 +7,12 @@ class SnsLoginApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        SnsLogin
-//            .withFirebaseAuth(this)
-//            .withKakaoLogin(this, BuildConfig.KAKAO_APP_KEY)
-//            .withNaverLogin(this, clientId = "", clientSecret = "", clientName = "")
-//
+        SnsLogin
+            .withGoogle(this)
+            .withTwitter(this)
+            .withKakao(this, BuildConfig.KAKAO_APP_KEY)
+            .withNaver(this, clientId = "", clientSecret = "", clientName = "")
+
 
     }
 }

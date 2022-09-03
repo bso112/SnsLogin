@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         loginWithNaver()
     }
 
+
+
     private fun loginWithGoogle() {
         googleLoginLauncher.launch()
     }

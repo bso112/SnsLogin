@@ -26,7 +26,9 @@ class GoogleLoginLauncher(
             onFailureCallback = callback
         }
 
-
+        /**
+         * this should be called before lifecycle of [activity] is STARTED state.
+         */
         fun build(activity: AppCompatActivity): GoogleLoginLauncher {
             activity.registerForActivityResult(GoogleSignInContract()) { account ->
                 if (account == null) {

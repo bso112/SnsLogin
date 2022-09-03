@@ -32,15 +32,18 @@ object SnsLogin {
             override fun logout(activity: Activity) {
                 googleLogout(activity)
             }
-        }, Twitter {
+        },
+        Twitter {
             override fun logout(activity: Activity) {
                 twitterLogout()
             }
-        }, Kakao {
+        },
+        Kakao {
             override fun logout(activity: Activity) {
                 kakaoLogout()
             }
-        }, Naver {
+        },
+        Naver {
             override fun logout(activity: Activity) {
                 naverLogout()
             }
@@ -51,18 +54,24 @@ object SnsLogin {
 
     private val authProviders = mutableListOf<AuthProvider>()
 
-    fun withFirebaseAuth(context: Context) = apply {
+
+    fun withGoogle(context: Context) = apply {
         FirebaseApp.initializeApp(context)
         authProviders.add(AuthProvider.Google)
+    }
+
+
+    fun withTwitter(context: Context) = apply {
+        FirebaseApp.initializeApp(context)
         authProviders.add(AuthProvider.Twitter)
     }
 
-    fun withKakaoLogin(context: Context, appKey: String) = apply {
+    fun withKakao(context: Context, appKey: String) = apply {
         KakaoSdk.init(context, appKey)
         authProviders.add(AuthProvider.Kakao)
     }
 
-    fun withNaverLogin(
+    fun withNaver(
         context: Context,
         clientId: String,
         clientSecret: String,
@@ -87,12 +96,12 @@ object SnsLogin {
         GoogleAuthUtil.signOut(activity)
     }
 
-    fun logoutAll(activity: Activity){
+    fun logoutAll(activity: Activity) {
         authProviders.forEach { it.logout(activity) }
     }
 
-    private fun checkSdkInitialized(authProvider: AuthProvider){
-        if(!authProviders.contains(authProvider)){
+    private fun checkSdkInitialized(authProvider: AuthProvider) {
+        if (!authProviders.contains(authProvider)) {
             throw NotInitializedError(authProvider.name)
         }
     }
