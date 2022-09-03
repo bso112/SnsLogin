@@ -1,7 +1,7 @@
-package com.manta.snslogin.login.google
+package com.manta.snslogin
 
 
-data class GoogleUser(
+data class FirebaseUserData(
     val idToken : String,
     val email : String,
     val displayName: String,

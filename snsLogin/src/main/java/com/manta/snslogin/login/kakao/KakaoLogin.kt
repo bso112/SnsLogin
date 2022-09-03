@@ -6,11 +6,13 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 
+typealias KakaoAccessToken = String
+
 object KakaoLogin {
 
     fun login(
         context: Context,
-        onSuccess: (token: String) -> Unit,
+        onSuccess: (token: KakaoAccessToken) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->

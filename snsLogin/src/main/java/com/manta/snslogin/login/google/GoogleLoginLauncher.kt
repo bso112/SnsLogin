@@ -2,6 +2,7 @@ package com.manta.snslogin.login.google
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.manta.snslogin.FirebaseUserData
 
 
 class GoogleLoginLauncher(
@@ -14,10 +15,10 @@ class GoogleLoginLauncher(
     }
 
     class Builder(private val defaultWebClientId: String) {
-        private var onSuccessCallback: (GoogleUser) -> Unit = {}
+        private var onSuccessCallback: (FirebaseUserData) -> Unit = {}
         private var onFailureCallback: (String) -> Unit = {}
 
-        fun onSuccess(callback: (GoogleUser) -> Unit) = apply {
+        fun onSuccess(callback: (FirebaseUserData) -> Unit) = apply {
             onSuccessCallback = callback
         }
 
@@ -31,7 +32,7 @@ class GoogleLoginLauncher(
                 if (account == null) {
                     onFailureCallback("Failed to login with google")
                 } else {
-                    FirebaseAuthUtil.googleSignIn(activity, account, onSuccess = { googleUser ->
+                    GoogleAuthUtil.googleSignIn(activity, account, onSuccess = { googleUser ->
                         onSuccessCallback(googleUser)
                     }, onFailure = { msg ->
                         onFailureCallback(msg)

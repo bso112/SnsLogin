@@ -14,6 +14,8 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import com.manta.snslogin.login.google.GoogleAuthUtil
+import com.manta.snslogin.login.kakao.KakaoAccessToken
 import com.manta.snslogin.login.kakao.KakaoLogin
 import com.manta.snslogin.login.naver.NaverLogin
 import com.manta.snslogin.login.naver.NaverLoginResult
@@ -49,23 +51,19 @@ object SnsLogin {
     }
 
     fun googleLogout(activity: Activity) {
-        Firebase.auth.signOut()
-        val opt = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-        val client = GoogleSignIn.getClient(activity, opt)
-        client.signOut()
-        client.revokeAccess()
+        GoogleAuthUtil.signOut(activity)
     }
 
 
     fun kakaoLogin(
         context: Context,
-        onSuccess: (token: String) -> Unit,
+        onSuccess: (token: KakaoAccessToken) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         KakaoLogin.login(context, onSuccess, onFailure)
     }
 
-    fun kakaoLogout(onSuccess: () -> Unit, onFailure: (Throwable) -> Unit) {
+    fun kakaoLogout(onSuccess: () -> Unit = {}, onFailure: (Throwable) -> Unit = {}) {
         KakaoLogin.logOut(onSuccess, onFailure)
     }
 
@@ -86,13 +84,13 @@ object SnsLogin {
 
     fun twitterLogin(
         activity: Activity,
-        onSuccess: (accessToken: String) -> Unit,
+        onSuccess: (firebaseUserData: FirebaseUserData) -> Unit,
         onFailure: (String) -> Unit
     ) {
         TwitterLogin.login(activity, onSuccess, onFailure)
     }
 
-    fun twitterLogout(){
+    fun twitterLogout() {
         TwitterLogin.logOut()
     }
 

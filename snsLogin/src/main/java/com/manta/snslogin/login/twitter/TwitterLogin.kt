@@ -1,13 +1,11 @@
 package com.manta.snslogin.login.twitter
 
 import android.app.Activity
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.OAuthCredential
-import com.google.firebase.auth.OAuthProvider
+import com.google.firebase.auth.*
+import com.manta.snslogin.FirebaseUserData
+import com.manta.snslogin.login.google.GoogleAuthUtil
 import com.manta.snslogin.util.toSafe
 
 
@@ -15,7 +13,7 @@ object TwitterLogin {
 
     fun login(
         activity: Activity,
-        onSuccess: (accessToken: String) -> Unit,
+        onSuccess: (firebaseUserData: FirebaseUserData) -> Unit,
         onFailure: (String) -> Unit
     ) {
         val provider = OAuthProvider.newBuilder("twitter.com")
@@ -26,12 +24,7 @@ object TwitterLogin {
             pendingResultTask
                 .addOnSuccessListener(
                     OnSuccessListener { authResult ->
-                        val accessToken = (authResult.credential as? OAuthCredential)?.accessToken
-                        if (accessToken != null) {
-                            onSuccess(accessToken)
-                        } else {
-                            onFailure("Try to login with twitter. but access token is null")
-                        }
+                        handleAuthResult(authResult, onSuccess, onFailure)
                     })
                 .addOnFailureListener {
                     onFailure(it.message.toSafe())
@@ -42,12 +35,7 @@ object TwitterLogin {
             firebaseAuth
                 .startActivityForSignInWithProvider( /* activity= */activity, provider.build())
                 .addOnSuccessListener { authResult ->
-                    val accessToken = (authResult.credential as? OAuthCredential)?.accessToken
-                    if (accessToken != null) {
-                        onSuccess(accessToken)
-                    } else {
-                        onFailure("Try to login with twitter. but access token is null")
-                    }
+                    handleAuthResult(authResult, onSuccess, onFailure)
                 }
                 .addOnFailureListener {
                     onFailure(it.message.toSafe())
@@ -58,4 +46,32 @@ object TwitterLogin {
     fun logOut(){
         FirebaseAuth.getInstance().signOut()
     }
+
+    private fun handleAuthResult(authResult : AuthResult, onSuccess: (firebaseUserData: FirebaseUserData) -> Unit, onFailure: (String) -> Unit){
+        val user = authResult.user ?: run {
+            onFailure("Fail to sign in with firebase")
+            return
+        }
+
+        user.getIdToken(true).addOnSuccessListener { result ->
+            if (result.token != null && result.token.toSafe().isNotBlank()) {
+                FirebaseUserData(
+                    email = user.email.toSafe(),
+                    idToken = result.token.toSafe(),
+                    displayName = user.displayName.toSafe(),
+                    phoneNumber = user.phoneNumber.toSafe(),
+                    photoUrl = user.photoUrl.toString(),
+                    isEmailVerified = user.isEmailVerified.toSafe(),
+                    isAnonymous = user.isAnonymous.toSafe(),
+                    providerId = user.providerId,
+                    uid = user.uid
+                ).also {
+                    onSuccess(it)
+                }
+            } else {
+                onFailure("invalid firebase token")
+            }
+        }
+    }
+
 }

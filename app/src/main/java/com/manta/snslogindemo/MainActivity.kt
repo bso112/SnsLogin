@@ -17,11 +17,10 @@ class MainActivity : AppCompatActivity() {
     private val googleLoginLauncher: GoogleLoginLauncher by lazy {
         SnsLogin.googleLogin(getString(R.string.default_web_client_id))
             .onSuccess { googleUser ->
-                Toast.makeText(this, "Login Succeed! token : $googleUser", Toast.LENGTH_LONG).show()
-                Log.d(javaClass.simpleName, "Login Succeed! token : $googleUser")
+                onSuccess(googleUser.toString())
             }.onFailure {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-                Log.d(javaClass.simpleName, "Login Failed! error: $it")
+                onFailure(it)
+                SnsLogin.googleLogout(this)
             }.build(this)
     }
 
@@ -30,27 +29,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+    }
+
+    private fun loginWithGoogle() {
         googleLoginLauncher.launch()
+    }
 
-//        SnsLogin.kakaoLogin(this, onSuccess = {
-//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
-//        }, onFailure = {
-//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
-//            Log.d(javaClass.simpleName, "Login Failed! error: $it")
-//        })
-//
-//        SnsLogin.naverLogin(this, onSuccess = {
-//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
-//        }, onFailure = {
-//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
-//        })
-//
-//
-//        SnsLogin.twitterLogin(this, onSuccess = {
-//            Toast.makeText(this, "Login Succeed! token : $it", Toast.LENGTH_LONG).show()
-//        }, onFailure = {
-//            Toast.makeText(this, "Login Failed! error: $it", Toast.LENGTH_LONG).show()
-//        })
+    private fun loginWithKakao() {
+        SnsLogin.kakaoLogin(this, onSuccess = {
+            onSuccess(it)
+        }, onFailure = {
+            onFailure(it.message ?: "")
+            SnsLogin.kakaoLogout()
+        })
+    }
 
+    private fun loginWithNaver() {
+        SnsLogin.naverLogin(this, onSuccess = {
+            onSuccess(it.toString())
+        }, onFailure = {
+            onFailure(it)
+            SnsLogin.naverLogout()
+        })
+    }
+
+    private fun loginWithTwitter() {
+        SnsLogin.twitterLogin(this, onSuccess = {
+            onSuccess(it.toString())
+        }, onFailure = {
+            onFailure(it)
+            SnsLogin.twitterLogout()
+        })
+    }
+
+    private fun onSuccess(data: String) {
+        Toast.makeText(this, "Login Succeed! data : $data", Toast.LENGTH_LONG).show()
+        Log.d(javaClass.simpleName, "Login Succeed! data : $data")
+    }
+
+    private fun onFailure(error: String) {
+        Toast.makeText(this, "Login Failed! error: $error", Toast.LENGTH_LONG).show()
+        Log.d(javaClass.simpleName, "Login Failed! error: $error")
     }
 }
