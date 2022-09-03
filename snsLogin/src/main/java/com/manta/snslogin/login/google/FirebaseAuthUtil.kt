@@ -1,6 +1,7 @@
 package com.manta.snslogin.login.google
 
 import android.app.Activity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,7 +19,7 @@ internal object FirebaseAuthUtil {
     internal fun googleSignIn(
         activity: Activity,
         account: GoogleSignInAccount,
-        onSuccess: (token: String) -> Unit,
+        onSuccess: (user: GoogleUser) -> Unit,
         onFailure: (errMsg: String) -> Unit
     ) {
         val googleIdToken = account.idToken.takeIf { it?.isNotBlank().toSafe() }
@@ -26,12 +27,27 @@ internal object FirebaseAuthUtil {
             onFailure("invalid google id token")
         } else {
             val credential = GoogleAuthProvider.getCredential(googleIdToken, null)
-            val auth = Firebase.auth
-            auth.signInWithCredential(credential)
-                .addOnSuccessListener(activity) {
-                    auth.currentUser?.getIdToken(true)?.addOnSuccessListener { result ->
+            Firebase.auth.signInWithCredential(credential)
+                .addOnSuccessListener(activity) { authResult ->
+                    val user = authResult.user ?: run {
+                        onFailure("Fail to sign in with firebase")
+                        return@addOnSuccessListener
+                    }
+                    user.getIdToken(true).addOnSuccessListener { result ->
                         if (result.token != null && result.token.toSafe().isNotBlank()) {
-                            onSuccess(result.token.toSafe())
+                            GoogleUser(
+                                email = user.email.toSafe(),
+                                idToken = result.token.toSafe(),
+                                displayName = user.displayName.toSafe(),
+                                phoneNumber = user.phoneNumber.toSafe(),
+                                photoUrl = user.photoUrl.toString(),
+                                isEmailVerified = user.isEmailVerified.toSafe(),
+                                isAnonymous = user.isAnonymous.toSafe(),
+                                providerId = user.providerId,
+                                uid = user.uid
+                            ).also {
+                                onSuccess(it)
+                            }
                         } else {
                             onFailure("invalid firebase token")
                             singOut(activity)

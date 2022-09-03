@@ -14,10 +14,10 @@ class GoogleLoginLauncher(
     }
 
     class Builder(private val defaultWebClientId: String) {
-        private var onSuccessCallback: (String) -> Unit = {}
+        private var onSuccessCallback: (GoogleUser) -> Unit = {}
         private var onFailureCallback: (String) -> Unit = {}
 
-        fun onSuccess(callback: (String) -> Unit) = apply {
+        fun onSuccess(callback: (GoogleUser) -> Unit) = apply {
             onSuccessCallback = callback
         }
 
@@ -31,8 +31,8 @@ class GoogleLoginLauncher(
                 if (account == null) {
                     onFailureCallback("Failed to login with google")
                 } else {
-                    FirebaseAuthUtil.googleSignIn(activity, account, onSuccess = { idToken ->
-                        onSuccessCallback(idToken)
+                    FirebaseAuthUtil.googleSignIn(activity, account, onSuccess = { googleUser ->
+                        onSuccessCallback(googleUser)
                     }, onFailure = { msg ->
                         onFailureCallback(msg)
                     })
