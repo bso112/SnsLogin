@@ -4,6 +4,7 @@
 <img src="https://img.shields.io/badge/-Android-FA7343?style=flat&logo=Android"/>
 <img alt="License" src="https://img.shields.io/badge/License-MIT-blue.svg"/>
 <img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/>
+<img alt="Version" src="https://jitpack.io/v/bsw112/SnsLogin.svg"/>
 </p>
 
 # Before we start
@@ -11,6 +12,37 @@
 For example, if you want to use google OAuth, you must create Firebase app and set all setting.
 > *For now, google login & twitter login uses Firebase Authentication.*
 
+# Install
+
+1. Add below in your project level build.gradle
+```gradle
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+````
+
+Or in your setting.gradle
+
+```gradle
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+
+```
+
+2. Add below in your app level build.gralde
+```gradle
+	dependencies {
+	        implementation 'com.github.bsw112:SnsLogin:x.y.z'
+	}
+```
 
 # How to use
 1. Initialize SnsLogin with OAuth providers you want.
@@ -23,7 +55,7 @@ class SnsLoginApp : Application() {
         SnsLogin
             .withGoogle(this)
             .withTwitter(this)
-            .withKakao(this, BuildConfig.KAKAO_APP_KEY)
+            .withKakao(this, appkey = "")
             .withNaver(this, clientId = "", clientSecret = "", clientName = "")
     }
 }
