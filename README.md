@@ -20,6 +20,7 @@ For example, if you want to use google OAuth, you must create Firebase app and s
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
+			maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
 		}
 	}
 ````
@@ -31,8 +32,8 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         ...
-	maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
         maven { url "https://jitpack.io" }
+	maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 
