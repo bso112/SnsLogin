@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -26,6 +27,27 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.github.bsw112'
+                artifactId = 'final'
+                version = '1.0.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'com.github.bsw112'
+                artifactId = 'final-debug'
+                version = '1.0.0'
+            }
+        }
     }
 }
 
