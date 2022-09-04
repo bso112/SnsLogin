@@ -89,9 +89,12 @@ Don't forget to specify `android:name` on `<application>` tag in your AndoroidMa
 ````
 
 ## TODO
-- Twitch Login
-- Instagram Login
-- Apple Login
+- Google sign up
+- Naver sign up
+- Kakao sign up
+- Twitch sign in
+- Instagram sign in
+- Apple sign in
 
 ## License
 
