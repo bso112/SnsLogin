@@ -88,6 +88,10 @@ Don't forget to specify **android:name** on <application> tag in your AndoroidMa
         })
 ````
 
+## TODO
+1. Twitch Login
+2. Instagram Login
+3. Apple Login
 
 ## License
 
