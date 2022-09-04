@@ -31,6 +31,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         ...
+	maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
         maven { url "https://jitpack.io" }
     }
 }
@@ -40,7 +41,7 @@ dependencyResolutionManagement {
 2. Add below in your app level build.gralde
 ```gradle
 	dependencies {
-	        implementation 'com.github.bsw112:SnsLogin:x.y.z'
+	    implementation 'com.github.bsw112.SnsLogin:final:x.y.z'
 	}
 ```
 
