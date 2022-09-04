@@ -4,11 +4,6 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-def apiUrlPropertiesFile = rootProject.file("local.properties")
-def apiUrlProperties = new Properties()
-apiUrlProperties.load(new FileInputStream(apiUrlPropertiesFile))
-
-
 android {
     compileSdk 32
 
@@ -24,7 +19,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "KAKAO_APP_KEY", apiUrlProperties['KAKAO_APP_KEY']
+
         }
         release {
             minifyEnabled false

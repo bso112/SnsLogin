@@ -38,14 +38,14 @@ afterEvaluate {
 
                 groupId = 'com.github.bsw112'
                 artifactId = 'final'
-                version = '1.0.0'
+                version = '0.0.1'
             }
             debug(MavenPublication) {
                 from components.debug
 
                 groupId = 'com.github.bsw112'
                 artifactId = 'final-debug'
-                version = '1.0.0'
+                version = '0.0.1'
             }
         }
     }
