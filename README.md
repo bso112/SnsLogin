@@ -48,7 +48,7 @@ Don't forget to specify **android:name** on <application> tag in your AndoroidMa
 ```
 This library is licensed under the MIT License:
 
-Copyright (c) 2021 Petfriends
+Copyright (c) 2022 bsw112
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
