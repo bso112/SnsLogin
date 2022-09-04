@@ -75,9 +75,9 @@ class SnsLoginApp : Application() {
 }
 ```
 
-Don't forget to specify **android:name** on <application> tag in your AndoroidManifest.xml.
+Don't forget to specify `android:name` on `<application>` tag in your AndoroidManifest.xml.
 
-2. Use **{AuthProvider}Login()** function to login.
+2. Use `{AuthProvider}Login()` function to login.
 
 ```kotlin
  SnsLogin.kakaoLogin(this, onSuccess = {
