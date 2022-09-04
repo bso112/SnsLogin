@@ -15,7 +15,7 @@ import com.manta.snslogin.login.google.GoogleLoginLauncher
 class MainActivity : AppCompatActivity() {
 
     private val googleLoginLauncher: GoogleLoginLauncher by lazy {
-        SnsLogin.googleLogin(getString(R.string.default_web_client_id))
+        SnsLogin.googleLogin("getString(R.string.default_web_client_id)")
             .onSuccess { googleUser ->
                 onSuccess(googleUser.toString())
             }.onFailure {

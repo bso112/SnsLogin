@@ -10,7 +10,7 @@ class SnsLoginApp : Application() {
         SnsLogin
             .withGoogle(this)
             .withTwitter(this)
-            .withKakao(this, BuildConfig.KAKAO_APP_KEY)
+            .withKakao(this, "")
             .withNaver(this, clientId = "", clientSecret = "", clientName = "")
 
 
