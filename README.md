@@ -7,6 +7,16 @@
 <img alt="Version" src="https://jitpack.io/v/bsw112/SnsLogin.svg"/>
 </p>
 
+<p align="center">
+Make Android OAuth easier to use
+</p>
+
+# Feature
+- Google login
+- Twitter login
+- Kakao login
+- Naver login
+
 # Before we start
 **You need to set up all setting for each OAuth provider you use.**
 For example, if you want to use google OAuth, you must create Firebase app and set all setting.
