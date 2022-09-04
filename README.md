@@ -44,6 +44,8 @@ dependencyResolutionManagement {
 	}
 ```
 
+<img alt="Version" src="https://jitpack.io/v/bsw112/SnsLogin.svg"/>
+
 # How to use
 1. Initialize SnsLogin with OAuth providers you want.
 
