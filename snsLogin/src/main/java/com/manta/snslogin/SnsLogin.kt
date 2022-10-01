@@ -76,7 +76,7 @@ object SnsLogin {
         clientId: String,
         clientSecret: String,
         clientName: String
-    ) {
+    ) = apply {
         NaverIdLoginSDK.initialize(
             context,
             clientId,

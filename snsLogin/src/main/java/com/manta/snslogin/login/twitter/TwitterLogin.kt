@@ -20,7 +20,6 @@ internal object TwitterLogin {
         val firebaseAuth = FirebaseAuth.getInstance()
         val pendingResultTask: Task<AuthResult>? = firebaseAuth.pendingAuthResult
         if (pendingResultTask != null) {
-            // There's something already here! Finish the sign-in for your user.
             pendingResultTask
                 .addOnSuccessListener(
                     OnSuccessListener { authResult ->
@@ -30,10 +29,8 @@ internal object TwitterLogin {
                     onFailure(it.message.toSafe())
                 }
         } else {
-            // There's no pending result so you need to start the sign-in flow.
-            // See below.
             firebaseAuth
-                .startActivityForSignInWithProvider( /* activity= */activity, provider.build())
+                .startActivityForSignInWithProvider(activity, provider.build())
                 .addOnSuccessListener { authResult ->
                     handleAuthResult(authResult, onSuccess, onFailure)
                 }
