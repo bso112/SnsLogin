@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.manta.snslogin.twitter'
-    compileSdk 34
+    compileSdk 32
 
     defaultConfig {
         minSdk 24
