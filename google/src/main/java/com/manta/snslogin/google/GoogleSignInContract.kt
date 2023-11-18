@@ -12,7 +12,7 @@ import com.manta.snslogin.common.SnsLoginLogger
 class GoogleSignInContract : ActivityResultContract<String, GoogleSignInAccount>() {
 
     /**
-     * @param input defaultWebClientId
+     * @param input default_web_client_id
      */
     override fun createIntent(context: Context, input: String): Intent {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

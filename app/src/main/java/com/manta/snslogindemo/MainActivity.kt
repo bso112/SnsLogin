@@ -20,8 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        googleLoginLauncher.launch()
-
+        googleLoginLauncher.launch(getString(R.string.default_web_client_id))
     }
 
 
