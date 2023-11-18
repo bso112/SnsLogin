@@ -1,14 +1,13 @@
 package com.manta.snslogin.google
 
+import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
-import androidx.appcompat.app.AppCompatActivity
-import com.manta.snslogin.common.FirebaseUserData
 
 
 /**
  * use R.string.default_web_client_id for [androidx.activity.result.ActivityResultLauncher.launch] input
  */
-fun AppCompatActivity.registerForGoogleLoginResult(
+fun ComponentActivity.registerForGoogleLoginResult(
     onSuccess: (FirebaseUserData) -> Unit,
     onFailure: (Throwable) -> Unit,
 ): ActivityResultLauncher<String> {

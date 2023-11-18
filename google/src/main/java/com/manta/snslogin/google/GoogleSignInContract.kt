@@ -2,13 +2,11 @@ package com.manta.snslogin.google
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build.VERSION_CODES.P
 import androidx.activity.result.contract.ActivityResultContract
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.manta.snslogin.common.SnsLoginLogger
 
 class GoogleSignInContract(
     private val onFailure: (Throwable) -> Unit,
