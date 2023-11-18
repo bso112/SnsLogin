@@ -30,6 +30,7 @@ For example, if you want to use google OAuth, you must create Firebase app and s
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
+			//for kakao
 			maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
 		}
 	}
@@ -43,6 +44,7 @@ dependencyResolutionManagement {
     repositories {
         ...
         maven { url "https://jitpack.io" }
+	//for kakao
 	maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
@@ -52,49 +54,54 @@ dependencyResolutionManagement {
 2. Add below in your app level build.gralde
 ```gradle
 	dependencies {
-	    implementation 'com.github.bso112:SnsLogin:x.y.z'
+	    implementation com.github.bso112.SnsLogin:kakao:x.y.z
+	    implementation com.github.bso112.SnsLogin:naver:x.y.z
+	    implementation com.github.bso112.SnsLogin:google:x.y.z
+	    implementation com.github.bso112.SnsLogin:twitter:x.y.z
 	}
 ```
 
 <img alt="Version" src="https://jitpack.io/v/bsw112/SnsLogin.svg"/>
 
 # How to use
-1. Initialize SnsLogin with OAuth providers you want.
 
-```kotlin
-class SnsLoginApp : Application() {
+### Google Login
+```gradle
 
-    override fun onCreate() {
-        super.onCreate()
-        SnsLogin
-            .withGoogle(this)
-            .withTwitter(this)
-            .withKakao(this, appkey = "")
-            .withNaver(this, clientId = "", clientSecret = "", clientName = "")
-    }
+// project level build.gradle
+plugins {
+    id "com.google.gms.google-services" version "x.y.z" apply false
+}
+
+// app level build.gralde
+plugins {
+    id 'com.google.gms.google-services'
 }
 ```
 
-Don't forget to specify `android:name` on `<application>` tag in your AndoroidManifest.xml.
-
-2. Use `{AuthProvider}Login()` function to login.
-
 ```kotlin
- SnsLogin.kakaoLogin(this, onSuccess = {
-            onSuccess(it)
-        }, onFailure = {
-            onFailure(it.message ?: "")
-            SnsLogin.kakaoLogout()
-        })
-````
+class MainActivity : AppCompatActivity() {
 
-## TODO
-- Google sign up
-- Naver sign up
-- Kakao sign up
-- Twitch sign in
-- Instagram sign in
-- Apple sign in
+    private val googleLoginLauncher = registerForGoogleLoginResult(
+        onSuccess = {
+            Toast.makeText(this, "success $it", Toast.LENGTH_SHORT).show()
+            Log.d("mylog", "success: $it")
+        },
+        onFailure = {
+            Toast.makeText(this, "failure $it", Toast.LENGTH_SHORT).show()
+            Log.d("mylog", "failure: $it")
+        },
+    )
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        googleLoginLauncher.launch(getString(R.string.default_web_client_id))
+    }
+
+}
+```
 
 ## License
 
