@@ -12,7 +12,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/snsLogin" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/google" />
+            <option value="$PROJECT_DIR$/kakao" />
+            <option value="$PROJECT_DIR$/naver" />
+            <option value="$PROJECT_DIR$/twitter" />
           </set>
         </option>
       </GradleProjectSettings>

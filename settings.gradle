@@ -17,4 +17,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "SnsLoginDemo"
 include ':app'
-include ':snsLogin'
+include ':google'
+include ':common'
+include ':kakao'
+include ':naver'
+include ':twitter'
