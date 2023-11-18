@@ -10,9 +10,13 @@ import com.manta.snslogin.common.FirebaseUserData
  */
 fun AppCompatActivity.registerForGoogleLoginResult(
     onSuccess: (FirebaseUserData) -> Unit,
-    onFailure: (Throwable) -> Unit
+    onFailure: (Throwable) -> Unit,
 ): ActivityResultLauncher<String> {
-    return registerForActivityResult(GoogleSignInContract()) { account ->
+    return registerForActivityResult(GoogleSignInContract(onFailure)) { account ->
+        if (account == null) {
+            onFailure(IllegalStateException("GoogleSignInAccount is null"))
+            return@registerForActivityResult
+        }
         GoogleLoginUtil.googleSignIn(
             activity = this,
             account = account,

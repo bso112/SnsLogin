@@ -22,14 +22,18 @@ internal object GoogleLoginUtil {
         onSuccess: (user: FirebaseUserData) -> Unit,
         onFailure: (Exception) -> Unit,
     ) {
-        val googleIdToken = account.idToken.takeIf { it?.isNotBlank() == true }
-
-        checkNotNull(googleIdToken)
+        val googleIdToken = account.idToken.takeIf { it?.isNotBlank() == true } ?: kotlin.run {
+            onFailure(IllegalStateException("GoogleAccount idToken is Null or Blank"))
+            return
+        }
 
         val credential = GoogleAuthProvider.getCredential(googleIdToken, null)
         Firebase.auth.signInWithCredential(credential)
             .addOnSuccessListener(activity) { authResult ->
-                val user = checkNotNull(authResult.user)
+                val user = authResult.user ?: kotlin.run {
+                    onFailure(IllegalStateException("Firebase user is null"))
+                    return@addOnSuccessListener
+                }
                 user.getIdToken(true).addOnSuccessListener { result ->
                     FirebaseUserData(
                         email = user.email.orEmpty(),
