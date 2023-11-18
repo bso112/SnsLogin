@@ -84,6 +84,20 @@ class MainActivity : AppCompatActivity() {
 
     private val googleLoginLauncher = registerForGoogleLoginResult(
         onSuccess = {
+            //you can get firebaseUserData from $it
+            /**
+             * data class FirebaseUserData(
+             *     val idToken : String,
+             *     val email : String,
+             *     val displayName: String,
+             *     val phoneNumber: String,
+             *     val photoUrl : String,
+             *     val isEmailVerified : Boolean,
+             *     val isAnonymous : Boolean,
+             *     val providerId : String,
+             *     val uid: String
+             * )
+             */
             Toast.makeText(this, "success $it", Toast.LENGTH_SHORT).show()
             Log.d("mylog", "success: $it")
         },
