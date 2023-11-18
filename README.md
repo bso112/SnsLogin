@@ -52,7 +52,7 @@ dependencyResolutionManagement {
 2. Add below in your app level build.gralde
 ```gradle
 	dependencies {
-	    implementation 'com.github.bsw112.SnsLogin:final:x.y.z'
+	    implementation 'com.github.bso112:SnsLogin:x.y.z'
 	}
 ```
 
